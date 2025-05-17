@@ -8,8 +8,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Shifts")
 class Shift {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
     //Date
     var dateStart: String = "" //Date at the start of the shift
     var dateEnd: String = "" // Date at the end of the shift
@@ -29,6 +28,8 @@ class Shift {
     var timeShift: Int = 0 // Shift time in seconds
     var comment: String = "" //Comment at the end shift
 
+    var open: Boolean = true
+
     constructor(){}
 
     constructor(
@@ -44,7 +45,8 @@ class Shift {
         mileageEnd: Int,
         profit: Int,
         timeShift: Int,
-        comment: String
+        comment: String,
+        open: Boolean
     ) {
         this.dateStart = dateStart
         this.dateEnd = dateEnd
@@ -59,5 +61,6 @@ class Shift {
         this.profit = profit
         this.timeShift = timeShift
         this.comment = comment
+        this.open = open
     }
 }
