@@ -1,4 +1,7 @@
 package ru.fomihykh.mytaxi.ui.theme
 
-class ShiftViewModel {
+import androidx.lifecycle.ViewModel
+
+class ShiftViewModel: ViewModel() {
+
 }
