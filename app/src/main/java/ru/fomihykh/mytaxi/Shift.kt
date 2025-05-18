@@ -21,8 +21,8 @@ class Shift {
     var noncashEnd: Int = 0 //Cashless payments at the end of the shift
     var noncashtaxiEnd: Int = 0 //On the taxi company's account at the end of the shift
 
-    var mileageStart = 0 //Mileage at the start of the shift
-    var mileageEnd = 0 //Mileage at the end of the shift
+    var mileageStart: Int = 0 //Mileage at the start of the shift
+    var mileageEnd: Int = 0 //Mileage at the end of the shift
 
     var profit: Int = 0 //Profit at the end of the shift
     var timeShift: Int = 0 // Shift time in seconds

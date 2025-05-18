@@ -1,17 +1,22 @@
 package ru.fomihykh.mytaxi
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
 interface ShiftDao {
     @Query("SELECT * FROM shifts")
-    fun getAll(): List<Shift>
+    fun getShifts(): LiveData<List<Shift>>
 
     @Query("SELECT * FROM  shifts WHERE id = :id")
-    fun getById(id: Int): Shift
+    fun getByIdShift(id: Int): Shift
+
+    @Insert
+    fun addShift(shift: Shift)
 
     @Delete
-    fun delete(shift: Shift)
+    fun deleteShift(shift: Int)
 }

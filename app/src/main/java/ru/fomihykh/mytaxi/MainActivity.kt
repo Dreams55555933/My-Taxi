@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.fomihykh.mytaxi.ui.theme.MyTaxiTheme
-import ru.fomihykh.mytaxi.ui.theme.ShiftViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
                         MenuList.STATISTIC -> Statistic()
                         MenuList.ADDSHIFT -> AddShift()
                         MenuList.CLOSESHIFT -> CloseShift()
-                        MenuList.LISTSHIFT -> ListShift()
+                        MenuList.LISTSHIFT -> ListShift(vm.shiftList)
                     }
                 }
             }
