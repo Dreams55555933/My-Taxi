@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.Room
 
 class ShiftViewModel(application: Application): ViewModel() {
 
@@ -38,7 +37,7 @@ class ShiftViewModel(application: Application): ViewModel() {
     var open: Boolean by mutableStateOf(true)
 
     init {
-        val shiftDb = AppDatabase.getInstance(application)
+        val shiftDb = ShiftRoomDatabase.getInstance(application)
         val shiftDao = shiftDb.shiftDao()
         repository = ShiftRepository(shiftDao)
         shiftList = repository.shiftList

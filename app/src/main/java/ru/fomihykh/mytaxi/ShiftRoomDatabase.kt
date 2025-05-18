@@ -6,19 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [(Shift::class)], version = 1)
-abstract class AppDatabase: RoomDatabase() {
+abstract class ShiftRoomDatabase: RoomDatabase() {
 
     abstract fun shiftDao(): ShiftDao
 
     companion object{
-        private var INSTANCE: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase{
+        private var INSTANCE: ShiftRoomDatabase? = null
+        fun getInstance(context: Context): ShiftRoomDatabase{
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null){
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        AppDatabase::class.java,
+                        ShiftRoomDatabase::class.java,
                         "shiftdb"
                     ).fallbackToDestructiveMigration().build()
                     INSTANCE = instance
