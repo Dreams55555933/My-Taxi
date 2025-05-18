@@ -44,5 +44,7 @@ class ShiftViewModel(application: Application): ViewModel() {
         shiftList = repository.shiftList
     }
 
-
+    fun addShift(shift: Shift){
+        repository.addShift(shift)
+    }
 }

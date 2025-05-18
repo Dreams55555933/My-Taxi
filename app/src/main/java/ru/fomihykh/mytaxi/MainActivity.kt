@@ -37,7 +37,9 @@ class MainActivity : ComponentActivity() {
                 Box(Modifier.padding(innerPadding)) {
                     when(vm.selectedMenu){
                         MenuList.STATISTIC -> Statistic()
-                        MenuList.ADDSHIFT -> AddShift()
+                        MenuList.ADDSHIFT ->{
+                            vm.addShift(shift = Shift("1","1",1,1,1,1,1,1,1,1,1,1,"22",true))
+                        } //AddShift()
                         MenuList.CLOSESHIFT -> CloseShift()
                         MenuList.LISTSHIFT -> ListShift(vm.shiftList)
                     }
