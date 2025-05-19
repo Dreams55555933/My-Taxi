@@ -21,13 +21,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Menu(){
+fun Menu(vm: ShiftViewModel){
+    val coroutineScope = rememberCoroutineScope()
     Box(
         Modifier.padding(10.dp)
             .background(Color(40,57,65), shape = RoundedCornerShape(20.dp))
@@ -39,7 +41,7 @@ fun Menu(){
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                {},
+                {vm.selectedMenu = MenuList.STATISTIC},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(80,178,189)
                 ),
@@ -47,7 +49,8 @@ fun Menu(){
             ) {
                 Text("Статистика")
             }
-            IconButton({},
+            IconButton(
+                {vm.addShift(shift = Shift("1","1",1,1,1,1,1,1,1,1,1,1,"22",true))},
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color(80,178,189),
                     contentColor = Color.White
@@ -61,7 +64,7 @@ fun Menu(){
                 )
             }
             Button(
-                {},
+                {vm.selectedMenu = MenuList.LISTSHIFT},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(80,178,189)
                 ),

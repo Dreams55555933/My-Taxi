@@ -20,7 +20,7 @@ abstract class ShiftRoomDatabase: RoomDatabase() {
                         context.applicationContext,
                         ShiftRoomDatabase::class.java,
                         "shiftdb"
-                    ).fallbackToDestructiveMigration().build()
+                    ).build()
                     INSTANCE = instance
                 }
                 return instance

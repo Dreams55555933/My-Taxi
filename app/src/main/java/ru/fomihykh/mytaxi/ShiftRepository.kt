@@ -7,11 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ShiftRepository(val shiftDao: ShiftDao) {
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     val shiftList: LiveData<List<Shift>> = shiftDao.getShifts()
 
     fun addShift(shift: Shift) = coroutineScope.launch { shiftDao.addShift(shift) }
 
-    fun deleteShift(id: Int) = coroutineScope.launch { shiftDao.deleteShift(id) }
+    fun deleteShift(shift: Shift) = coroutineScope.launch { shiftDao.deleteShift(shift) }
 }

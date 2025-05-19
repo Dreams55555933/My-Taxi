@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 
 class ShiftViewModel(application: Application): ViewModel() {
 
-    val selectedMenu by mutableStateOf(MenuList.STATISTIC)
+    var selectedMenu by mutableStateOf(MenuList.STATISTIC)
 
     val shiftList: LiveData<List<Shift>>
     private val repository: ShiftRepository

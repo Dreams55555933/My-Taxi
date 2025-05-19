@@ -1,5 +1,6 @@
 package ru.fomihykh.mytaxi
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,16 +12,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.fomihykh.mytaxi.ui.theme.MyTaxiTheme
+
+class ShiftViewModelFactory(val application: Application): ViewModelProvider.Factory{
+    override fun <T: ViewModel> create(modelClass: Class<T>):T{
+        return ShiftViewModel(application) as T
+    }
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            Main()
+            val owner = LocalViewModelStoreOwner.current
+            owner?.let {
+                val viewModel: ShiftViewModel = viewModel(
+                    it,"ShiftViewModel", ShiftViewModelFactory(LocalContext.current.applicationContext as Application)
+                )
+                Main(viewModel)
+            }
         }
     }
     @Preview(showSystemUi = true)
@@ -30,7 +46,7 @@ class MainActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
             Scaffold(
                 bottomBar = {
-                    Menu()
+                    Menu(vm)
                 },
                 containerColor = Color(53,135,154)
             ) { innerPadding->
@@ -38,7 +54,7 @@ class MainActivity : ComponentActivity() {
                     when(vm.selectedMenu){
                         MenuList.STATISTIC -> Statistic()
                         MenuList.ADDSHIFT ->{
-                            vm.addShift(shift = Shift("1","1",1,1,1,1,1,1,1,1,1,1,"22",true))
+
                         } //AddShift()
                         MenuList.CLOSESHIFT -> CloseShift()
                         MenuList.LISTSHIFT -> ListShift(vm.shiftList)

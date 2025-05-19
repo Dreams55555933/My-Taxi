@@ -18,5 +18,5 @@ interface ShiftDao {
     fun addShift(shift: Shift)
 
     @Delete
-    fun deleteShift(shift: Int)
+    fun deleteShift(shift: Shift)
 }
