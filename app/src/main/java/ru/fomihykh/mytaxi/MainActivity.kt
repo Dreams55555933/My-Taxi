@@ -4,7 +4,6 @@ import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -20,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.fomihykh.mytaxi.ui.theme.MyTaxiTheme
 
+@Suppress("UNCHECKED_CAST")
 class ShiftViewModelFactory(val application: Application): ViewModelProvider.Factory{
     override fun <T: ViewModel> create(modelClass: Class<T>):T{
         return ShiftViewModel(application) as T
@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
                         MenuList.ADDSHIFT ->{
 
                         } //AddShift()
+                        MenuList.OPENSHIFT -> OpenShift()
                         MenuList.CLOSESHIFT -> CloseShift()
                         MenuList.LISTSHIFT -> ListShift(vm.shiftList)
                     }
@@ -65,5 +66,5 @@ class MainActivity : ComponentActivity() {
     }
 }
 enum class MenuList{
-    STATISTIC, ADDSHIFT, CLOSESHIFT, LISTSHIFT
+    STATISTIC, ADDSHIFT, CLOSESHIFT, LISTSHIFT, OPENSHIFT
 }

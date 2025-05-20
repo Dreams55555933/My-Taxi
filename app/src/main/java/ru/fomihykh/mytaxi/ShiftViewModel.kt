@@ -2,6 +2,7 @@ package ru.fomihykh.mytaxi
 
 import android.app.Application
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,5 +46,8 @@ class ShiftViewModel(application: Application): ViewModel() {
 
     fun addShift(shift: Shift){
         repository.addShift(shift)
+    }
+    fun getOpenShift(): Boolean{
+        return shiftList.value?.any{it.open}==true
     }
 }

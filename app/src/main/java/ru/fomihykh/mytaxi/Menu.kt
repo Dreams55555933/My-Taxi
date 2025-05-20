@@ -14,25 +14,31 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.map
 
 @Composable
 fun Menu(vm: ShiftViewModel){
     val coroutineScope = rememberCoroutineScope()
     Box(
-        Modifier.padding(10.dp)
-            .background(Color(40,57,65), shape = RoundedCornerShape(20.dp))
+        Modifier
+            .padding(10.dp)
+            .background(Color(40, 57, 65), shape = RoundedCornerShape(20.dp))
             .padding(10.dp)
     ){
         Row(
@@ -50,16 +56,25 @@ fun Menu(vm: ShiftViewModel){
                 Text("Статистика")
             }
             IconButton(
-                {vm.addShift(shift = Shift("1","1",1,1,1,1,1,1,1,1,1,1,"22",true))},
+                {
+                    if (vm.getOpenShift()){
+                        vm.selectedMenu = MenuList.CLOSESHIFT
+                    }else{
+                        vm.selectedMenu = MenuList.OPENSHIFT
+                    }
+                },
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color(80,178,189),
                     contentColor = Color.White
                 ),
-                modifier = Modifier.border(
-                    shape = CircleShape, border = BorderStroke(width = 0.dp, color = Color.Black)
-                ).size(50.dp)) {
+                modifier = Modifier
+                    .border(
+                        shape = CircleShape,
+                        border = BorderStroke(width = 0.dp, color = Color.Black)
+                    )
+                    .size(50.dp)) {
                 Icon(
-                    Icons.Filled.Add, contentDescription = "Добавить",
+                    if (vm.getOpenShift()) Icons.Filled.Close else Icons.Filled.Add, contentDescription = "Добавить",
                     modifier = Modifier.size(30.dp)
                 )
             }
