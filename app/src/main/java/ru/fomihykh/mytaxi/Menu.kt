@@ -1,5 +1,6 @@
 package ru.fomihykh.mytaxi
 
+import android.content.SharedPreferences
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,7 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.map
 
 @Composable
-fun Menu(vm: ShiftViewModel){
-    val coroutineScope = rememberCoroutineScope()
+fun Menu(vm: ShiftViewModel,pref: SharedPreferences){
+    vm.open = pref.getBoolean("open",false)
     Box(
         Modifier
             .padding(10.dp)
@@ -57,7 +61,7 @@ fun Menu(vm: ShiftViewModel){
             }
             IconButton(
                 {
-                    if (vm.getOpenShift()){
+                    if (vm.open){
                         vm.selectedMenu = MenuList.CLOSESHIFT
                     }else{
                         vm.selectedMenu = MenuList.OPENSHIFT
@@ -74,7 +78,7 @@ fun Menu(vm: ShiftViewModel){
                     )
                     .size(50.dp)) {
                 Icon(
-                    if (vm.getOpenShift()) Icons.Filled.Close else Icons.Filled.Add, contentDescription = "Добавить",
+                    if (vm.open) Icons.Filled.Close else Icons.Filled.Add, contentDescription = if (vm.open) "Закрыть" else "Открыть",
                     modifier = Modifier.size(30.dp)
                 )
             }

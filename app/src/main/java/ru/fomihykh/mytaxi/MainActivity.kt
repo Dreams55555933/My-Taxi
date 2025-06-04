@@ -1,9 +1,14 @@
 package ru.fomihykh.mytaxi
 
 import android.app.Application
+import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -27,7 +32,9 @@ class ShiftViewModelFactory(val application: Application): ViewModelProvider.Fac
 }
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        var pref = getSharedPreferences("openShift",MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContent {
             val owner = LocalViewModelStoreOwner.current
@@ -35,30 +42,37 @@ class MainActivity : ComponentActivity() {
                 val viewModel: ShiftViewModel = viewModel(
                     it,"ShiftViewModel", ShiftViewModelFactory(LocalContext.current.applicationContext as Application)
                 )
-                Main(viewModel)
+                Main(viewModel,pref)
             }
         }
     }
-    @Preview(showSystemUi = true)
+    @RequiresApi(Build.VERSION_CODES.O)
     @Composable
-    fun Main(vm: ShiftViewModel = viewModel()){
+    fun Main(vm: ShiftViewModel = viewModel(),pref: SharedPreferences){
         MyTaxiTheme {
             val scope = rememberCoroutineScope()
             Scaffold(
                 bottomBar = {
-                    Menu(vm)
+                    Menu(vm,pref)
                 },
                 containerColor = Color(53,135,154)
             ) { innerPadding->
                 Box(Modifier.padding(innerPadding)) {
-                    when(vm.selectedMenu){
-                        MenuList.STATISTIC -> Statistic()
-                        MenuList.ADDSHIFT ->{
+                    Crossfade(
+                        targetState = vm.selectedMenu,
+                        animationSpec = tween(durationMillis = 300)
+                    ) {
+                        menu->
+                        when(menu){
+                            MenuList.STATISTIC -> Statistic()
+                            MenuList.ADDSHIFT ->{
 
-                        } //AddShift()
-                        MenuList.OPENSHIFT -> OpenShift()
-                        MenuList.CLOSESHIFT -> CloseShift()
-                        MenuList.LISTSHIFT -> ListShift(vm.shiftList)
+                            } //AddShift()
+                            MenuList.OPENSHIFT -> OpenShift(vm, pref = pref)
+                            MenuList.CLOSESHIFT -> CloseShift(vm, pref = pref)
+                            MenuList.LISTSHIFT -> ListShift(vm ,vm.shiftList)
+                            MenuList.VIEWSHIFT -> ViewShift(vm.selectedViewShift)
+                        }
                     }
                 }
             }
@@ -66,5 +80,5 @@ class MainActivity : ComponentActivity() {
     }
 }
 enum class MenuList{
-    STATISTIC, ADDSHIFT, CLOSESHIFT, LISTSHIFT, OPENSHIFT
+    STATISTIC, ADDSHIFT, CLOSESHIFT, LISTSHIFT, OPENSHIFT, VIEWSHIFT
 }

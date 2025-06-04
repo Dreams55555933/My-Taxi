@@ -1,6 +1,5 @@
 package ru.fomihykh.mytaxi
 
-import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,4 +13,5 @@ class ShiftRepository(val shiftDao: ShiftDao) {
     fun addShift(shift: Shift) = coroutineScope.launch { shiftDao.addShift(shift) }
 
     fun deleteShift(shift: Shift) = coroutineScope.launch { shiftDao.deleteShift(shift) }
+
 }
