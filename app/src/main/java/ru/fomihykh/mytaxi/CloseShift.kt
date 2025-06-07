@@ -2,6 +2,7 @@ package ru.fomihykh.mytaxi
 
 import android.content.SharedPreferences
 import android.os.Build
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -86,6 +87,14 @@ fun CloseShift(vm: ShiftViewModel,pref: SharedPreferences){
                 Color.White
             )
         )
+        val cur = LocalDateTime.now()
+        val fort = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")
+        val forTime = cur.format(fort)
+        val startDataT = parseDateTime(dateStart.toString())
+        val dur = getTimeDifference(startDataT,cur)
+        Text(forTime.toString())
+        Text(startDataT.toString())
+        Text(dur.toString())
         Button(
             {
                 val currentDateTime = LocalDateTime.now()

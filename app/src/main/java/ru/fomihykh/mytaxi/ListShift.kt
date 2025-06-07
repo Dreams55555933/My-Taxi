@@ -53,39 +53,15 @@ fun ListShift(vm: ShiftViewModel, shifts: LiveData<List<Shift>>){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row {
-                    Text(shift.dateStart,color = Color.White)
+                    Text("Дата: ",color = Color.White)
+                    Text(shift.dateStart, color = Color.White)
+                }
+                Row {
+                    Text("Прибыль: ",color = Color.White)
                     Text(shift.profit.toString(), color = Color.White)
                 }
-                Text("Развернуть", color = Color.White)
-                Row {
-                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Развернуть", modifier = Modifier.size(20.dp), tint = Color.White)
-                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Развернуть", modifier = Modifier.size(20.dp), tint = Color.White)
-                    Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Развернуть", modifier = Modifier.size(20.dp), tint = Color.White)
-                }
+
             }
         }
-    }
-    if (vm.openDialog){
-        AlertDialog(
-            onDismissRequest = {vm.openDialog = false},
-            title = { Text("Подтверждеие действия") },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        vm.openDialog = false
-                        vm.deleteShift(vm.deleteShift)
-                    }
-                ) { Text("Удалить") }
-            },
-            dismissButton = {
-                Button(
-                    onClick = {vm.openDialog = false}
-                ) { Text("Отмена") }
-            },
-            containerColor = Color.White,
-            titleContentColor = Color.Black,
-            textContentColor = Color.Black,
-            iconContentColor = Color.Black
-        )
     }
 }

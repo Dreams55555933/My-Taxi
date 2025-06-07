@@ -64,14 +64,14 @@ class MainActivity : ComponentActivity() {
                     ) {
                         menu->
                         when(menu){
-                            MenuList.STATISTIC -> Statistic()
+                            MenuList.STATISTIC -> Statistic(vm)
                             MenuList.ADDSHIFT ->{
 
                             } //AddShift()
                             MenuList.OPENSHIFT -> OpenShift(vm, pref = pref)
                             MenuList.CLOSESHIFT -> CloseShift(vm, pref = pref)
                             MenuList.LISTSHIFT -> ListShift(vm ,vm.shiftList)
-                            MenuList.VIEWSHIFT -> ViewShift(vm.selectedViewShift)
+                            MenuList.VIEWSHIFT -> ViewShift(vm)
                         }
                     }
                 }
